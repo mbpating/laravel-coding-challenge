@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class ReferralsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $referrals = $user->referrals;
+        
+        return Inertia::render('Admin/index',[
+            'referrals' => $referrals
+        ]);
     }
 }

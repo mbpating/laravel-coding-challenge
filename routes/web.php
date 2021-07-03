@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ReferralsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin/referrals');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/referrals', [ReferralsController::class, 'index'])->name('admin.referrals');
+
+Route::get('/referrals',[ReferralsController::class,'refer'])->name('referrals');
