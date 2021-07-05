@@ -58,7 +58,7 @@ class User extends Authenticatable
      * @return string
      */
     public function getReferralLinkAttribute() {
-        return $this->referral_link = route('/',['refer'=>$this->referral_code]);
+        return $this->referral_link = route('root');
     }
 
     /**
@@ -76,6 +76,6 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function referrals() {
-        return $this->hasMany(Referrals::class,'referrer_id');
+        return $this->hasMany(Referral::class,'referrer_id');
     }
 }

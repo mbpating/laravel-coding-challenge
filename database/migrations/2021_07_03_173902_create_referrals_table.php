@@ -18,6 +18,7 @@ class CreateReferralsTable extends Migration
             $table->unsignedBigInteger('referrer_id')->nullable();
             $table->foreign('referrer_id')->references('id')->on('users');
             $table->enum('status',['Referred','Registered']);
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

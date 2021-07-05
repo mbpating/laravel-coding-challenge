@@ -23,7 +23,7 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var ReferralsPage = function ReferralsPage(_a) {
   var referrals = _a.referrals;
-  return react_1["default"].createElement("div", null);
+  return react_1["default"].createElement("div", null, react_1["default"].createElement("table", null, react_1["default"].createElement("thead", null, react_1["default"].createElement("th", null, "Email Address date, status")), react_1["default"].createElement("tbody", null)));
 };
 
 exports.default = ReferralsPage;

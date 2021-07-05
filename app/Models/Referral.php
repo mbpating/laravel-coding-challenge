@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Referrals extends Model
+class Referral extends Model
 {
     use HasFactory;
     
@@ -15,7 +15,9 @@ class Referrals extends Model
      * @var array
      */
     protected $fillable = [
-        ''
+        'referrer_id',
+        'status',
+        'email'
     ];
 
     /**

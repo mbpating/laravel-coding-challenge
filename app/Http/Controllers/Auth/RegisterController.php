@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Referral;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Notifications\ReferralSuccessful;
@@ -34,7 +35,6 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
     /**
      * Create a new controller instance.
      *
@@ -52,11 +52,18 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
-        if ($request->has('refer')) {
-            session(['referrer' => $request->query('refer')]);
-        }
+        $referral_token = session()->pull('referrer',null);
+        $referral_email = '';
 
-        return view('auth.register');
+        if (!is_null($referral_token)) {
+            $referral_id = substr($referral_token,6);
+            $referral = Referral::find($referral_id);
+            if ($referral->status=='Registered')
+                return view('auth.registered');
+            else
+                $referral_email = $referral->email;
+        }
+        return view('auth.register',['email'=>$referral_email]);
     }
 
     /**
@@ -82,7 +89,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $referrer = User::where('referral_token',session()->pull('referrer'))->first();
         do {
             $referral_token = Str::random(6);
             $user = User::where('referral_token',$referral_token)->first();
@@ -91,8 +97,16 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'referrer_id' => $referrer ? $referrer->id : null,
             'referral_token' => $referral_token
         ]);
+    }
+
+    public function registered(Request $request, $user) {
+        if ($user->referrer !== null) {
+            $referral = Referral::where('email',$user->email)->first();
+            $referral->status = 'Registered';
+            $referral->save();
+        }
+        return redirect($this->redirectPath());
     }
 }

@@ -71261,6 +71261,22 @@ var map = {
 	"./Admin/index.tsx": [
 		"./resources/js/Pages/Admin/index.tsx",
 		"resources_js_Pages_Admin_index_tsx"
+	],
+	"./Referrals": [
+		"./resources/js/Pages/Referrals/index.tsx",
+		"resources_js_Pages_Referrals_index_tsx"
+	],
+	"./Referrals/": [
+		"./resources/js/Pages/Referrals/index.tsx",
+		"resources_js_Pages_Referrals_index_tsx"
+	],
+	"./Referrals/index": [
+		"./resources/js/Pages/Referrals/index.tsx",
+		"resources_js_Pages_Referrals_index_tsx"
+	],
+	"./Referrals/index.tsx": [
+		"./resources/js/Pages/Referrals/index.tsx",
+		"resources_js_Pages_Referrals_index_tsx"
 	]
 };
 function webpackAsyncContext(req) {
@@ -71357,6 +71373,18 @@ module.exports = webpackAsyncContext;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/create fake namespace object */
 /******/ 	(() => {
 /******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
@@ -71417,7 +71445,7 @@ module.exports = webpackAsyncContext;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "resources_js_Pages_Admin_index_tsx") return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_Admin_index_tsx":1,"resources_js_Pages_Referrals_index_tsx":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
