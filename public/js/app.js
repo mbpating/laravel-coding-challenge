@@ -71277,6 +71277,14 @@ var map = {
 	"./Referrals/index.tsx": [
 		"./resources/js/Pages/Referrals/index.tsx",
 		"resources_js_Pages_Referrals_index_tsx"
+	],
+	"./Referrals/success": [
+		"./resources/js/Pages/Referrals/success.tsx",
+		"resources_js_Pages_Referrals_success_tsx"
+	],
+	"./Referrals/success.tsx": [
+		"./resources/js/Pages/Referrals/success.tsx",
+		"resources_js_Pages_Referrals_success_tsx"
 	]
 };
 function webpackAsyncContext(req) {
@@ -71445,7 +71453,7 @@ module.exports = webpackAsyncContext;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Admin_index_tsx":1,"resources_js_Pages_Referrals_index_tsx":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_Admin_index_tsx":1,"resources_js_Pages_Referrals_index_tsx":1,"resources_js_Pages_Referrals_success_tsx":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

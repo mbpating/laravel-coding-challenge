@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Referral;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class ReferralController extends Controller
@@ -44,13 +45,15 @@ class ReferralController extends Controller
         $input = $request->all();
         Validator::make($input, [
             'emails' => 'required'
-        ])->after(function ($validator) use ($input) {
+        ])->after(function ($validator) use ($input, $user) {
             if (array_key_exists('emails',$input)) {
                 $emails = json_decode($input['emails']);
                 $duplicate_emails = array();
+                //Checking if email in emails list has already been 'Referred' or 'Registered'
                 foreach ($emails as $email) {
-                    $referral = Referral::where('email',$email)->first();
-                    if (is_null($referral)) {
+                    $referrals = Referral::where('email',$email)->first();
+                    $users = User::where('email',$email)->first();
+                    if (is_null($referrals) && is_null($users)) {
                         continue;
                     } else {
                         $duplicate_emails[] = $email;
@@ -58,8 +61,20 @@ class ReferralController extends Controller
                     }
                 }
                 if (!empty($duplicate_emails)) {
-                    $validator->errors()->add('emails', __('There are duplicate emails in the list. (' . str_replace(']','',str_replace('['
+                    $validator->errors()->add('emails', __('These emails has already been referred or registered. (' . str_replace(']','',str_replace('['
                     ,'',str_replace('"','',json_encode($duplicate_emails)))) . ')'));
+                }
+                //Check if emails list has duplicates
+                $unique = array_unique($emails);
+                $duplicates = array_diff_assoc($emails,$unique);
+                if (!empty($duplicates)) {
+                    $validator->errors()->add('emails', __('There are duplicate emails in this list. (' . str_replace(']','',str_replace('['
+                    ,'',str_replace('"','',json_encode($duplicate_emails)))) . ')'));
+                }
+                //Check if user has already reached the maximum # of allowed referrals
+                $referral_count = $user->referrals->count();
+                if (($referral_count + count($emails))>10) {
+                    $validator->errors()->add('emails', __('You have reached the maximum referral count.'));
                 }
             }
         })->validateWithBag('referForm');
@@ -72,6 +87,6 @@ class ReferralController extends Controller
             ]);
         }
 
-        return redirect()->route('referrals');
+        return Inertia::render('Referrals/success');
     }
 }
